@@ -1,4 +1,4 @@
-# D3 Practice exercise: LOTR Kill Counts
+# D3 Practice Exercise: LOTR Kill Counts
 
 Ever wondered how many kills your favourite characters had in the Lord of The Rings movies? Well wonder no more. 
 
