@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<script type="module">
+
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    let lotr_kill_count_data = [{
+        character: "Gandalf",
+        kill_count: 26
+    },
+    {
+        character: "Samwise",
+        kill_count: 12
+    },
+    {
+        character: "Aragorn",
+        kill_count: 140
+    },
+    {
+        character: "Legolas",
+        kill_count: 354
+    },
+    {
+        character: "Gimli",
+        kill_count: 59
+    },
+    {
+        character: "Boromir",
+        kill_count: 27
+    },
+    {
+        character: "Gollum",
+        kill_count: 1
+    }
+    ];
+
+
+    let toggleClass = (obj, toggle) => {
+        d3.select("#chart-container").selectAll("div")
+            .filter(d => d.character === obj.character)
+            .classed("highlightBar", toggle);
+        d3.select("#legend").selectAll("li")
+            .filter(d => d.character === obj.character)
+            .classed("highlightText", toggle);
+    };
+
+    let divSelection = d3.select('#chart-container')
+        .selectAll('div');
+
+    divSelection.data(lotr_kill_count_data)
+        .enter()
+        .append("div")
+        .attr("class", "bar")
+        .style("width", function (d) {
+            return d.kill_count * 2 + 'px';
+        })
+        .style("height", '50px')
+        .on("mouseover", function (d, i) {
+            toggleClass(i, true);
+        })
+        .on("mouseout", function (d, i) {
+            toggleClass(i, false);
+        });
+    let listSelection = d3.select('#legend')
+        .selectAll('li');
+
+    listSelection.data(lotr_kill_count_data)
+        .enter()
+        .append('li')
+        .text((d) => {
+            return d.character + ': ' + d.kill_count + '               kills'
+        })
+        .on('mouseover', (event, obj) => {
+            toggleClass(obj, true);
+        })
+        .on('mouseout', (event, obj) => {
+            toggleClass(obj, false);
+        });
+</script>
+
+<html>
+
+<head>
+    <title>Bar Chart Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h3>LOTR Kill Counts</h3>
+    <h2>D3 Practice</h2>
+    <div id="container">
+        <div id="chart-container">
+
+        </div>
+        <ol id="legend"></ol>
+    </div>
+</body>
+
+</html>
